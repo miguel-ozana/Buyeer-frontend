@@ -15,7 +15,6 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
-
 body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
@@ -24,10 +23,38 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+
+  font-family: 'Roboto', sans-serif;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* estilos adicionais */
+.iframe-container {
+  background-color: #0C0C0D;
+  border-radius: 10px;
+
+  color: #FBF9FE; /* Para o texto dentro do iframe */
+}
+
+.input-field {
+  width: 150px;
+  height: 30px;
+  border: 1px solid #0C0C0D;
+  border-radius: 5px;
+  text-align: center;
+  margin: 0 5px;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #0C0C0D;
+}
+
+button {
+  cursor: pointer;
 }
