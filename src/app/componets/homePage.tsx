@@ -1,3 +1,4 @@
+// HomePage.tsx
 "use client"
 import React, { useState, useEffect } from "react";
 import { Trash2, Edit, CheckSquare, Square } from "react-feather";
@@ -58,7 +59,7 @@ const HomePage: React.FC = () => {
 
   const handleCloseEditItem = () => {
     setEditItemId(null);
-    fetchItems();
+    fetchItems(); // Atualiza os itens após editar
   };
 
   useEffect(() => {
