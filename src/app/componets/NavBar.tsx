@@ -4,11 +4,15 @@ import React, { useState } from 'react';
 import CreateItemIframe from './createItemIframe';
 import Image from 'next/image';
 import Link from 'next/link';
-import { PlusCircleIcon, XMarkIcon } from '@heroicons/react/16/solid';
+import { PlusCircleIcon, XMarkIcon, ArrowPathIcon } from '@heroicons/react/16/solid';
 
 const NavBar: React.FC = () => {
   const [createItemOpen, setCreateItemOpen] = useState(false);
-  
+
+  const handleRefresh = () => {
+    window.location.reload();
+  };
+
   return (
     <>
       <nav className='fixed top-0 left-0 right-0 z-10'>
@@ -22,7 +26,12 @@ const NavBar: React.FC = () => {
               alt="About me"
             />
           </Link>
-          <div className="flex items-center">
+          <div className="flex items-center space-x-4">
+            <button onClick={handleRefresh}
+              className='block py-2 pl-3 pr-4 text-[#ADB7BE] sm:text-xl rounded md:p-0 hover:text-white'
+            >
+              <ArrowPathIcon className='h-5 w-5'/>
+            </button>
             <button onClick={() => setCreateItemOpen(true)}
               className='block py-2 pl-3 pr-4 text-[#ADB7BE] sm:text-xl rounded md:p-0 hover:text-white'
             >
@@ -30,8 +39,6 @@ const NavBar: React.FC = () => {
             </button>
           </div>
         </div>
-        {/* <div className="mobile-menu block md:hidden">
-        </div> */}
       </nav>
 
       {createItemOpen && (
@@ -51,4 +58,3 @@ const NavBar: React.FC = () => {
 }
 
 export default NavBar;
-
