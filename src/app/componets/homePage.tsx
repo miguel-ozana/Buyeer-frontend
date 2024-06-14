@@ -1,10 +1,9 @@
-// HomePage.tsx
 "use client"
 import React, { useState, useEffect } from "react";
 import { Trash2, Edit, CheckSquare, Square } from "react-feather";
 import axios from 'axios';
 import EditItemIframe from "./editItemIframe";
-import { XMarkIcon } from "@heroicons/react/16/solid";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 interface Item {
   id: number;
@@ -59,7 +58,7 @@ const HomePage: React.FC = () => {
 
   const handleCloseEditItem = () => {
     setEditItemId(null);
-    fetchItems(); // Atualiza os itens após editar
+    fetchItems();
   };
 
   useEffect(() => {
