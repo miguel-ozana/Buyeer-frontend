@@ -1,6 +1,5 @@
-import Image from "next/image";
 import NavBar from "./componets/NavBar";
-import HomePage from "./componets/homePage"; // Certifique-se de que o caminho para HomePage está correto
+import HomePage from "./componets/homePage";
 
 export default function Home() {
   return (
