@@ -7,6 +7,7 @@ import { XMarkIcon } from "@heroicons/react/24/solid";
 import { setCookie, getCookie } from "../../../utils/cookies"; // Utilize as funções utilitárias para cookies
 
 
+
 export interface Item {
   id: number;
   name: string;
