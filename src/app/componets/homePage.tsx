@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useEffect, useCallback } from "react";
 import { Trash2, Edit, CheckSquare, Square } from "react-feather";
 import axios from 'axios';
