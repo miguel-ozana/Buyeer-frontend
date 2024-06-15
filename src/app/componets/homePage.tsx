@@ -20,8 +20,10 @@ const HomePage: React.FC = () => {
   const [deviceId, setDeviceId] = useState<string | null>(null);
 
   useEffect(() => {
-    const id = getDeviceId();
-    setDeviceId(id);
+    if (typeof window !== 'undefined') {
+      const id = getDeviceId();
+      setDeviceId(id);
+    }
   }, []);
 
   const fetchItems = useCallback(async () => {
