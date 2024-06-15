@@ -1,12 +1,13 @@
-"use client";
+"use client"
 import React, { useState, useEffect, useCallback } from "react";
-import { Trash2, Edit, CheckSquare, Square } from "react-feather";
 import axios, { AxiosError } from "axios";
+import { Trash2, Edit, CheckSquare, Square } from "react-feather";
 import EditItemIframe from "./editItemIframe";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { getDeviceId } from "../../utils"; // Certifique-se de que este caminho esteja correto
+import { setCookie, getCookie } from "../../../utils/cookies"; // Utilize as funções utilitárias para cookies
 
-interface Item {
+
+export interface Item {
   id: number;
   name: string;
   quantity: number;
@@ -17,14 +18,20 @@ const HomePage: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [editItemId, setEditItemId] = useState<number | null>(null);
-  const [deviceId, setDeviceId] = useState<string | null>(null);
+  const [deviceId, setDeviceId] = useState<string | null>(getCookie("deviceId")); // Recupera o deviceId do cookie
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const id = getDeviceId();
+    if (!deviceId) {
+      const id = generateDeviceId(); // Gere um novo deviceId se não estiver presente
       setDeviceId(id);
+      setCookie("deviceId", id); // Armazene o deviceId em um cookie para persistência
     }
-  }, []);
+  }, [deviceId]);
+
+  const generateDeviceId = (): string => {
+    // Lógica para gerar um novo deviceId
+    return "generated-device-id"; // Substitua com sua lógica real de geração de deviceId
+  };
 
   const fetchItems = useCallback(async () => {
     if (!deviceId) return;
