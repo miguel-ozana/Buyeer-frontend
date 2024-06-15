@@ -1,7 +1,7 @@
 "use client"
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Item } from '../../../types/Items' // Importe a interface Item do arquivo onde ela está definida
+import React, { useState, useEffect } from 'react';
+import { Item } from '../../../types/Items';
 
 interface Props {
   itemId: number;
@@ -20,6 +20,7 @@ const EditItemIframe: React.FC<Props> = ({ itemId, onClose }) => {
     // Fetch the item details to pre-fill the form
     const fetchItemDetails = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`https://buyeer-backend.onrender.com/api/items/${itemId}`);
         const item = response.data;
         setItemDetails(item);
@@ -28,6 +29,8 @@ const EditItemIframe: React.FC<Props> = ({ itemId, onClose }) => {
       } catch (err) {
         console.error('Erro ao buscar detalhes do item:', err);
         setError('Erro ao buscar detalhes do item');
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -41,17 +44,17 @@ const EditItemIframe: React.FC<Props> = ({ itemId, onClose }) => {
       setLoading(true);
       const updatedItem = {
         name: itemName !== '' ? itemName : itemDetails?.name,
-        quantity: itemQuantity
+        quantity: itemQuantity,
       };
       const response = await axios.put(`https://buyeer-backend.onrender.com/api/items/${itemId}`, updatedItem);
       console.log('Item atualizado com sucesso:', response.data);
       setSuccessMessage('Item atualizado com sucesso');
       setError(null);
-      setLoading(false);
-      setTimeout(onClose, 1500); // Close the modal after 1.5 seconds
+      setTimeout(onClose, 1500); // Feche o modal após 1,5 segundos
     } catch (err) {
       console.error('Erro ao atualizar item:', err);
       setError('Erro ao atualizar item');
+    } finally {
       setLoading(false);
     }
   };
@@ -104,6 +107,6 @@ const EditItemIframe: React.FC<Props> = ({ itemId, onClose }) => {
       </div>
     </div>
   );
-}
+};
 
-export default EditItemIframe;
+export default EditItemIframe
