@@ -1,10 +1,11 @@
-"use client";
+// HomePage.tsx
+"use client"; // Marca este componente como um componente de cliente
 import React, { useState, useEffect, useCallback } from "react";
 import { Trash2, Edit, CheckSquare, Square } from "react-feather";
 import axios from 'axios';
 import EditItemIframe from "./editItemIframe";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import { getDeviceId } from './../../utils';
+import { getDeviceId } from '../../utils'; // Certifique-se de que este caminho esteja correto
 
 interface Item {
   id: number;
