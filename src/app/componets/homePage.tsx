@@ -1,4 +1,3 @@
-// HomePage.tsx
 "use client"; // Marca este componente como um componente de cliente
 import React, { useState, useEffect, useCallback } from "react";
 import { Trash2, Edit, CheckSquare, Square } from "react-feather";
@@ -18,7 +17,12 @@ const HomePage: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [editItemId, setEditItemId] = useState<number | null>(null);
-  const deviceId = getDeviceId();
+  const [deviceId, setDeviceId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const id = getDeviceId();
+    setDeviceId(id);
+  }, []);
 
   const fetchItems = useCallback(async () => {
     if (!deviceId) return; // Certifica-se de que o deviceId está disponível antes de buscar itens
@@ -40,7 +44,7 @@ const HomePage: React.FC = () => {
     try {
       await axios.delete(`https://buyeer-backend.onrender.com/api/items/${id}`, {
         headers: {
-          'x-device-id': deviceId
+          'x-device-id': deviceId!
         }
       });
       setItems(prevItems => prevItems.filter(item => item.id !== id));
@@ -55,7 +59,7 @@ const HomePage: React.FC = () => {
         bought: !bought 
       }, {
         headers: {
-          'x-device-id': deviceId
+          'x-device-id': deviceId!
         }
       });
       setItems(prevItems =>
@@ -78,8 +82,10 @@ const HomePage: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchItems();
-  }, [fetchItems]);
+    if (deviceId) {
+      fetchItems();
+    }
+  }, [deviceId, fetchItems]);
 
   return (
     <div className="home-page relative">
