@@ -21,6 +21,7 @@ const HomePage: React.FC = () => {
   const deviceId = getDeviceId();
 
   const fetchItems = useCallback(async () => {
+    if (!deviceId) return; // Certifica-se de que o deviceId está disponível antes de buscar itens
     try {
       const response = await axios.get<Item[]>('https://buyeer-backend.onrender.com/api/items', {
         headers: {
