@@ -1,10 +1,9 @@
-// HomePage.tsx
-"use client"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Trash2, Edit, CheckSquare, Square } from "react-feather";
 import axios from 'axios';
 import EditItemIframe from "./editItemIframe";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { getDeviceId } from './../../utils';
 
 interface Item {
   id: number;
@@ -17,21 +16,30 @@ const HomePage: React.FC = () => {
   const [items, setItems] = useState<Item[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [editItemId, setEditItemId] = useState<number | null>(null);
+  const deviceId = getDeviceId();
 
-  const fetchItems = async () => {
+  const fetchItems = useCallback(async () => {
     try {
-      const response = await axios.get<Item[]>('https://buyeer-backend.onrender.com/api/items');
+      const response = await axios.get<Item[]>('https://buyeer-backend.onrender.com/api/items', {
+        headers: {
+          'x-device-id': deviceId
+        }
+      });
       setItems(response.data);
       setLoading(false);
     } catch (error) {
       console.error('Erro ao buscar os itens:', error);
       setLoading(false);
     }
-  };
+  }, [deviceId]);
 
   const deleteItem = async (id: number) => {
     try {
-      await axios.delete(`https://buyeer-backend.onrender.com/api/items/${id}`);
+      await axios.delete(`https://buyeer-backend.onrender.com/api/items/${id}`, {
+        headers: {
+          'x-device-id': deviceId
+        }
+      });
       setItems(prevItems => prevItems.filter(item => item.id !== id));
     } catch (error) {
       console.error('Erro ao deletar o item:', error);
@@ -42,6 +50,10 @@ const HomePage: React.FC = () => {
     try {
       await axios.put(`https://buyeer-backend.onrender.com/api/items/${id}`, {
         bought: !bought 
+      }, {
+        headers: {
+          'x-device-id': deviceId
+        }
       });
       setItems(prevItems =>
         prevItems.map(item =>
@@ -64,7 +76,7 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     fetchItems();
-  }, []);
+  }, [fetchItems]);
 
   return (
     <div className="home-page relative">
